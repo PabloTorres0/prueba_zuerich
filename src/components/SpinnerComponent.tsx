@@ -1,12 +1,10 @@
 import React from 'react'
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from 'react-bootstrap/Spinner'
 
-const SpinnerComponent = () => {
+const SpinnerComponent: React.FC = () => {
   return (
-    <div className='text-center'>
-        <Spinner 
-        variant='light'
-        animation="border" />
+    <div className="text-center">
+      <Spinner variant="light" animation="border" />
     </div>
   )
 }
