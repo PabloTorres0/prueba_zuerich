@@ -19,7 +19,7 @@ const contacts: React.FC = () => {
   const [contactsArray, setContactsArray] = React.useState<ContactUser[]>([
     { name: '', email: '', number: '', id: '' }
   ])
-  const [spinnerAction, setSpinnerAction] = React.useState<boolean>(false)
+  const [spinnerAction, setSpinnerAction] = React.useState<boolean>(true)
   const [modeModal, setModeModal] = React.useState<boolean>(false)
   const [modalOn, setModalOn] = React.useState<boolean>(false)
   const [data, setData] = React.useState<ContactUser>({
@@ -28,9 +28,14 @@ const contacts: React.FC = () => {
     number: '',
     id: ''
   })
-  const getData = async ():Promise<void> => {
+
+  const [filteredBy, setFilteredBy] = React.useState<ContactUser[]>([
+    { name: '', email: '', number: '', id: '' }
+  ])
+
+  const getData = async (): Promise<void> => {
     const querySnapshot = await getDocs(collection(db, 'contacts'))
-    console.log('leer datos')
+    console.log('leer datos', querySnapshot)
     querySnapshot.forEach((doc) => {
       contactsVar = [
         ...contactsVar,
@@ -41,37 +46,58 @@ const contacts: React.FC = () => {
           id: doc.id
         }
       ]
-      setSpinnerAction(true)
       setContactsArray(contactsVar)
+      setFilteredBy(contactsVar)
     })
+    setSpinnerAction(false)
   }
 
-  const deleteContact = async (id: string):Promise<void> => {
+  const deleteContact = async (id: string): Promise<void> => {
     await deleteDoc(doc(db, 'contacts', id))
-    await getData()
+    const deletedItem = contactsArray.filter((item) => item.id !== id)
+    setContactsArray(deletedItem)
+    setFilteredBy(deletedItem)
   }
 
-  const editContact = (item: ContactUser):void => {
+  const editContact = (item: ContactUser): void => {
     setModeModal(true)
     setModalOn(true)
     setData(item)
   }
-  const addContact = ():void => {
+  const addContact = (): void => {
     setModeModal(false)
     setModalOn(true)
+  }
+
+  const modalShow = (state: boolean): void => {
+    setModalOn(state)
+  }
+
+  const filterBy = (input: string): void => {
+    const newFiltered = contactsArray.filter(
+      (item) => item.name.includes(input) || item.number.includes(input)
+    )
+    setFilteredBy(newFiltered)
   }
 
   React.useEffect(() => {
     void getData()
   }, [modalOn])
 
-  const modalShow = (state: boolean):void => {
-    setModalOn(state)
-  }
-
   return (
     <div className="w-50 mx-auto">
-      {spinnerAction ? (
+      <div className="container my-4">
+        <input
+          className="form-control mr-sm-2"
+          type="search"
+          placeholder="Nombre o teléfono"
+          onChange={(e): void => {
+            filterBy(e.target.value)
+          }}
+        />
+      </div>
+
+      {!spinnerAction ? (
         <table className="table table-striped mt-3">
           <thead>
             <tr>
@@ -82,7 +108,7 @@ const contacts: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {contactsArray.map((item, index) => (
+            {filteredBy.map((item, index) => (
               <tr key={index}>
                 <td>{index}</td>
                 <td>

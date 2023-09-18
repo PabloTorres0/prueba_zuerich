@@ -1,9 +1,8 @@
-"use client"
+'use client'
 import React from 'react'
 import Card from 'react-bootstrap/Card'
 
 const Home: React.FC = () => {
-
   return (
     <div>
       <Card style={{ width: '24rem' }} className="mx-auto mt-3 mb-3">
@@ -17,7 +16,7 @@ const Home: React.FC = () => {
             style={{ marginTop: '-50px' }}
             height="100px"
             width="100px"
-            src="https://th.bing.com/th/id/OIP.DDGDiaJsE9700U4Byqx_AQHaHa?pid=ImgDet&rs=1"
+            src="https://firebasestorage.googleapis.com/v0/b/proyecto-zurich.appspot.com/o/pablo.png?alt=media&token=88656f0c-ae02-4988-92b8-a41ffe3f6872"
           />
         </div>
         <Card.Body>
@@ -33,4 +32,4 @@ const Home: React.FC = () => {
   )
 }
 
-export  default Home
+export default Home

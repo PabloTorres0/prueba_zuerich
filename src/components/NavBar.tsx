@@ -2,10 +2,12 @@ import React from 'react'
 
 const NavBar: React.FC = () => {
   return (
-    <div className="mx-auto w-50">
+    <div className="mx-auto w-100">
       <nav
-        className="navbar bg-dark border-bottom border-body navbar-expand-lg bg-body-tertiary"
+        className="navbar navbar-dark border-bottom border-body navbar-expand-lg"
         data-bs-theme="dark"
+        // bg = "primary"
+        // style={{ backgroundColor: '#1A5BA2' }}
       >
         <div className="container-fluid">
           <a className="navbar-brand" href="/">

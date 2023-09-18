@@ -6,6 +6,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import '../firebase'
+import FooterComponent from '@/components/FooterComponent'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,10 +19,11 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="p-3 mb-2 bg-dark w-100 p-3" style={{ height: '700px' }}>
+        <div className="p-3 w-100 p-3 bg-dark" style={{ height: '700px' }}>
           <NavBar />
           {children}
         </div>
+        <FooterComponent />
       </body>
     </html>
   )
